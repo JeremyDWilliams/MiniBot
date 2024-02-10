@@ -14,11 +14,11 @@ The purpose of the MiniBot is to afforably educate while having the ablity to do
 
 
 <p align="center">
-<a href="https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfDb"><img src="https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfDb" style="width: 200px; max-width: 50%; height: auto" title="Click for the larger version." />
+<a href="https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfDb"><img src="https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfDb" style="width: 200px; max-width: 50%; height: auto" title="Click for the larger version." /> </a>
 <br>
  <br>
  <br>
- </a>
+
   
 ## Arduino Servo Control with Recording and Playback
 
