@@ -1,0 +1,195 @@
+// MiniBot sketch for Arduino controller
+// January 2024 by Jeremy D Williams
+// With support of Williams Robotics (https//:www.WilliamsRobotics.io)
+// This software is released under AAGNU 3.0 and is subject to the terms and conditions of those terms
+// This project is hosted on Github at https://github.com/JeremyDWilliams/MiniBot
+//
+//
+// Sources for parts, kits, complete builds and accesories for the MiniBot can be found at the github repository
+//
+#include <Servo.h>
+#include <SD.h>
+
+Servo servo1, servo2, servo3, servo4, servo5;
+const int servoPins[] = {9, 10, 11, 12, 13};
+const int potPins[] = {A0, A1, A2, A3, A4};
+const int numServos = 5;
+
+const int playButtonPin = 2;  // Pin for the play button
+const int recordButtonPin = 3;  // Pin for the record button
+const int pauseEndButtonPin = 4;  // Pin for the pause/end button
+
+const int redLedPin = 5;  // Pin for the red LED
+const int greenLedPin = 6;  // Pin for the green LED
+
+const int homePosition = 90;  // Home position for the servos
+
+File movementsFile;
+int movementCounter = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(playButtonPin, INPUT_PULLUP);
+  pinMode(recordButtonPin, INPUT_PULLUP);
+  pinMode(pauseEndButtonPin, INPUT_PULLUP);
+  pinMode(redLedPin, OUTPUT);
+  pinMode(greenLedPin, OUTPUT);
+
+  for (int i = 0; i < numServos; i++) {
+    servoPins[i] = servoPins[i];
+    potPins[i] = potPins[i];
+  }
+
+  for (int i = 0; i < numServos; i++) {
+    pinMode(potPins[i], INPUT);
+    servo[i].attach(servoPins[i]);
+    servo[i].write(homePosition); // Set servos to home position
+  }
+
+  // Initialize SD card
+  if (!SD.begin(10)) {
+    Serial.println("SD initialization failed");
+    return;
+  }
+
+  // Find the latest movement file and increment the movementCounter
+  while (SD.exists("Skit-" + String(movementCounter) + ".txt")) {
+    movementCounter++;
+  }
+}
+
+void loop() {
+  static bool recording = false;
+  static bool playing = false;
+  static bool paused = false;
+  static unsigned long lastButtonPressTime = 0;
+  static int buttonPressCount = 0;
+// Check for button presses
+  if (digitalRead(playButtonPin) == LOW) {
+    handleButtonPress(playing, recording, paused, lastButtonPressTime, buttonPressCount);
+  } else if (digitalRead(recordButtonPin) == LOW) {
+    handleButtonPress(playing, recording, paused, lastButtonPressTime, buttonPressCount);
+  } else if (digitalRead(pauseEndButtonPin) == LOW) {
+    handleButtonPress(playing, recording, paused, lastButtonPressTime, buttonPressCount);
+  }
+
+  // Perform recording or playback based on current state
+  if (recording) {
+    recordMovements();
+  } else if (playing) {
+    playMovements();
+  } else {
+    // Read potentiometer values and control servos accordingly
+    for (int i = 0; i < numServos; i++) {
+      int potValue = analogRead(potPins[i]);
+      int servoAngle = map(potValue, 0, 1023, 0, 180);
+      servo[i].write(servoAngle);
+      stallBurnoutProtection(servo[i]);
+    }
+  }
+
+  delay(100); // Adjust delay as needed
+}
+
+void handleButtonPress(bool &playing, bool &recording, bool &paused, unsigned long &lastButtonPressTime, int &buttonPressCount) {
+  unsigned long currentTime = millis();
+// Check if the button press is a double click
+  if (currentTime - lastButtonPressTime < 300) {
+    buttonPressCount++;
+  } else {
+    buttonPressCount = 1;
+  }
+
+  lastButtonPressTime = currentTime;
+
+  // Handle button press based on its function
+  if (buttonPressCount == 1) {
+    if (digitalRead(playButtonPin) == LOW) {
+      if (!playing) {
+        startPlayback();
+        playing = true;
+        digitalWrite(greenLedPin, HIGH); // Turn on green LED
+      } else if (paused) {
+        paused = false;
+        digitalWrite(greenLedPin, HIGH); // Turn on green LED
+      }
+    } else if (digitalRead(recordButtonPin) == LOW) {
+      if (!recording) {
+        startRecording();
+        recording = true;
+        digitalWrite(redLedPin, HIGH); // Turn on red LED
+      } else if (paused) {
+        paused = false;
+        digitalWrite(redLedPin, HIGH); // Turn on red LED
+      }
+    } else if (digitalRead(pauseEndButtonPin) == LOW) {
+      if (recording || playing) {
+        paused = !paused;
+        if (paused) {
+          digitalWrite(redLedPin, LOW); // Turn off red LED
+          digitalWrite(greenLedPin, LOW); // Turn off green LED
+        } else {
+          if (recording) {
+            digitalWrite(redLedPin, HIGH); // Turn on red LED
+          } else if (playing) {
+            digitalWrite(greenLedPin, HIGH); // Turn on green LED
+          }
+        }
+      }
+    }
+  } else if (buttonPressCount == 2) {
+    if (digitalRead(pauseEndButtonPin) == LOW) {
+      if (recording) {
+        stopRecording();
+        recording = false;
+        digitalWrite(redLedPin, LOW); // Turn off red LED
+      } else if (playing) {
+        stopPlayback();
+        playing = false;
+        digitalWrite(greenLedPin, LOW); // Turn off green LED
+      }
+      // Reset button press count after handling double click
+      buttonPressCount = 0;
+    }
+  }
+}
+void startRecording() {
+  Serial.println("Recording started");
+  movementsFile = SD.open("Skit-" + String(movementCounter) + ".txt", FILE_WRITE);
+  if (!movementsFile) {
+    Serial.println("Error opening Skit-" + String(movementCounter) + ".txt for writing");
+    return;
+  }
+}
+
+void stopRecording() {
+  Serial.println("Recording stopped");
+  movementsFile.close();
+  movementCounter++;
+}
+
+void startPlayback() {
+  Serial.println("Playback started");
+  movementsFile = SD.open("Skit-" + String(movementCounter - 1) + ".txt");
+}
+
+void stopPlayback() {
+  Serial.println("Playback stopped");
+  movementsFile.close();
+}
+
+void recordMovements() {
+  // Record servo positions to the file
+  for (int i = 0; i < numServos; i++) {
+    movementsFile.print(servo[i].read());
+    movementsFile.print(" ");
+  }
+  movementsFile.println();
+}
+
+void playMovements() {
+  if (movementsFile.available()) {
+    // Read servo positions from the file and move servos accordingly
+    String line = movementsFile.readStringUntil('\n');
+    char positions = strtok(const_cast<char>(line.c_str()), " ");
+    for (int i = 0; i < numServos;
