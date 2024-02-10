@@ -66,7 +66,7 @@ This Arduino project allows you to control multiple servos using a tiny MiniBot 
 
 ## Wiring Instructions
 - This chart is a placeholder and should not be used.
-- 
+
 | PIN | KIND | ASSIGMENT |
 |:-----:|:---:|:---------------|
 |  1 |Digital Out|      Servo 1, ARM        |
@@ -80,7 +80,7 @@ This Arduino project allows you to control multiple servos using a tiny MiniBot 
 |     6 | Digital IN|       Switch, PLAY       |
 |     7 | Digital IN |       Switch, RECORD       |
 |     8 | Digital IN |      Switch, PAUSE       |
-
+<br>
 ### Components Needed
 - 5 Servos
 - 5 Potentiometers
