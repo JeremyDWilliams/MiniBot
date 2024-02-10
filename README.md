@@ -94,19 +94,9 @@ This Arduino project allows you to control multiple servos using a tiny MiniBot 
 [NOT the correct Wiring Diagram, This is a place holder image]
  <br>
  <br>
-  <br>
- <br>
- <picture>
- <img alt="Arduino and 5 servos" src="https://i.stack.imgur.com/dn2h8.png">
-</picture>
-
-
- <br>
- <br>
-
 
 <p align="center">
-<a href="[https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfDb](https://i.stack.imgur.com/dn2h8.png)"><img src="[https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfD](https://i.stack.imgur.com/dn2h8.png)b" style="width: 100px; max-width: 30%; height: auto" title="Click for the larger version." /> </a>
+<a href="https://i.stack.imgur.com/dn2h8.png"><img src="https://i.stack.imgur.com/dn2h8.png" style="width: 500px; max-width: 90%; height: auto" title="Click for the larger version." /> </a>
 <br>
  <br>
  <br>
