@@ -33,3 +33,25 @@ This Arduino project allows you to control multiple servos using potentiometers,
 ### Wiring Diagram
 
 [Insert Wiring Diagram Here]
+
+- Connect each servo to a PWM pin on the Arduino (servoPins array).
+- Connect each potentiometer to an analog pin on the Arduino (potPins array).
+- Connect the play, record, and pause/end buttons to digital pins on the Arduino (playButtonPin, recordButtonPin, pauseEndButtonPin).
+- Connect the red and green LEDs to digital pins on the Arduino (redLedPin, greenLedPin).
+
+## Usage
+
+1. Connect the Arduino and upload the code (`servo_control.ino`).
+2. Wire the components according to the wiring diagram.
+3. Power on the system and adjust potentiometers to control servo positions.
+4. Press the record button to start recording movements.
+5. Press the play button to play back recorded movements.
+6. Press the pause/end button to pause or stop recording/playback.
+
+## Contributors
+
+- (https://github.com/jeremydwilliams)
+
+## License
+
+This project is licensed under the GNU AGPLv3 License - see the LICENSE.md file for details.
