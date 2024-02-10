@@ -92,10 +92,24 @@ This Arduino project allows you to control multiple servos using a tiny MiniBot 
 ### Wiring Diagram
 
 [NOT the correct Wiring Diagram, This is a place holder image]
-<picture>
+ <br>
+ <br>
+  <br>
+ <br>
+ <picture>
  <img alt="Arduino and 5 servos" src="https://i.stack.imgur.com/dn2h8.png">
 </picture>
 
+
+ <br>
+ <br>
+
+
+<p align="center">
+<a href="[https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfDb](https://i.stack.imgur.com/dn2h8.png)"><img src="[https://drive.google.com/uc?export=view&id=1ikl5Oti2HGW07uHvnFWjVrtxpKifyfD](https://i.stack.imgur.com/dn2h8.png)b" style="width: 100px; max-width: 30%; height: auto" title="Click for the larger version." /> </a>
+<br>
+ <br>
+ <br>
 
 - Connect each servo to a PWM pin on the Arduino (servoPins array).
 - Connect each potentiometer to an analog pin on the Arduino (potPins array).
