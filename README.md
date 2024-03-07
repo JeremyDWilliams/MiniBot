@@ -121,7 +121,7 @@ This Arduino project allows you to control multiple servos using a tiny MiniBot 
 
 ## Project Status
 
-This is an open source project consiting of software and hgardware. Contributions are welcome. It is supported by [Williams Robotics](https://www.williamsrobotics.io) Parts and components are available for purchase as are complete or partial kits and complete turnkey builds. All parts for the base MiniBot can also be sourced directly from other parts vendors. Parts sold by Williams Robotics in purchased builds/kits may differ from those on this github and feature improvements in performance or usability but are generally interchangable.
+This is an open source project consiting of software and hgardware. Contributions are welcome. It is supported by [Williams Robotics](https://www.rswilliams.com) Parts and components are available for purchase as are complete or partial kits and complete turnkey builds. All parts for the base MiniBot can also be sourced directly from other parts vendors. Parts sold by Williams Robotics in purchased builds/kits may differ from those on this github and feature improvements in performance or usability but are generally interchangable.
 
 For prebuilt units or for parts, please 
 ## License
